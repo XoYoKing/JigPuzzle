@@ -1,3 +1,4 @@
 <resources>
   <string name="app_name">JigPuzzle</string>
+  <string name="result_image_desc">Result image description</string>
 </resources>
