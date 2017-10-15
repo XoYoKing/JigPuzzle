@@ -8,12 +8,7 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import java.util.StringTokenizer;
-import java.util.concurrent.TimeUnit;
 
-/**
- * Created by zanyxdev on 15.10.17.
- */
 
 class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Runnable {
 
@@ -35,6 +30,15 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Runnable 
   // This is new. We need a SurfaceHolder. When we use Paint and Canvas in a thread
   // We will see it in action in the draw method soon.
   SurfaceHolder ourHolder;
+
+  public String getTimeField() {
+    return timeField;
+  }
+
+  public void setTimeField(String timeField) {
+    this.timeField = timeField;
+  }
+
   private String timeField;
 
   public GamePanel(Context context) {
@@ -50,11 +54,11 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Runnable 
     new CountDownTimer(30000, 1000) {
 
       public void onTick(long millisUntilFinished) {
-        timeField = new String("seconds remaining: " + millisUntilFinished / 1000);
+        setTimeField ("seconds remaining: " + millisUntilFinished / 1000);
       }
 
       public void onFinish() {
-        timeField = new String("done");
+        setTimeField ("done");
       }
     }.start();
 
@@ -130,7 +134,7 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Runnable 
      //     TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1));
 
       // Display the current fps on the screen
-      canvas.drawText("Time:" + timeField, 20, 80, paint);
+      canvas.drawText("Time:" + getTimeField(), 20, 80, paint);
 
       // Draw bob at bobXPosition, 200 pixels
       //canvas.drawBitmap(bitmapBob, bobXPosition, 200, paint);
