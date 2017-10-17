@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.CountDownTimer;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -12,6 +13,7 @@ import android.view.SurfaceView;
 
 class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Runnable {
 
+  private final Context mContext;
   // This is our thread
   Thread gameThread = null;
   // A boolean which we will set and unset  when the game is running- or not.
@@ -45,11 +47,22 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Runnable 
 
     // The next line of code asks the  SurfaceView class to set up our object.
     super(context);
+    mContext = context;
+    init();
+  }
 
-    setKeepScreenOn(true);
+  public GamePanel(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    this.mContext = context;
+    init();
+  }
 
-    // Initialize ourHolder and paint objects
+  private void init() {
     ourHolder = getHolder();
+    ourHolder.addCallback(this);
+    setKeepScreenOn(true);
+    // Initialize paint objects
+
     paint = new Paint();
     new CountDownTimer(30000, 1000) {
 
@@ -164,5 +177,8 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Runnable 
     playing = true;
     gameThread = new Thread(this);
     gameThread.start();
+  }
+
+  public void colorNew() {
   }
 }
